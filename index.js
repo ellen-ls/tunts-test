@@ -1,3 +1,4 @@
+require("dotenv").config()
 const { google } = require('googleapis');
 const auth = new google.auth.GoogleAuth({
     keyFile: 'credentials.json', // Pulling credentials in json form
@@ -29,7 +30,7 @@ function calculeSituation(media, absences, totalClasses) {
 async function readAndWriteToSheets() {
     try {
         const response = await sheets.spreadsheets.values.get({
-            spreadsheetId: '1uvGyCnl2RqYw-x2fljbLVjmd2vR6ZT9d3h3mfEHMPRE', // Key to get the spreadsheet
+            spreadsheetId:process.env.SpreadsheetId, // Key to get the spreadsheet
             range: 'engenharia_de_software!A4:H', // Specify the range of cells you want to read
         });
 
@@ -60,7 +61,7 @@ async function readAndWriteToSheets() {
             });
             
             const updateResponse = await sheets.spreadsheets.values.update({ // Update the spreadsheet
-                spreadsheetId: '1uvGyCnl2RqYw-x2fljbLVjmd2vR6ZT9d3h3mfEHMPRE', // Key to get the spreadsheet
+                spreadsheetId:process.env.spreadsheetId, // Key to get the spreadsheet
                 range: 'engenharia_de_software!G4:H', // Specify the range where you want to update
                 valueInputOption: 'USER_ENTERED', 
                 resource: {
